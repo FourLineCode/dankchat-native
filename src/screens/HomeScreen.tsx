@@ -41,7 +41,7 @@ export function HomeScreen() {
 				)}
 			</View>
 			<TouchableOpacity
-				onPress={() => navigation.navigate(RootStackScreens.ChatScreen, { channelName })}
+				onPress={() => navigation.replace(RootStackScreens.ChatScreen, { channelName })}
 				disabled={disableButton}
 				style={tw.style(
 					'p-4 bg-gray-800 rounded-lg flex-row items-center',
