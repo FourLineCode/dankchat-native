@@ -20,13 +20,13 @@ export function ChatScreen({ navigation, route }: StackScreenProps<Props, 'ChatS
 	return (
 		<SafeAreaView style={tw`flex-1 bg-gray-800`}>
 			<StatusBar style='light' />
-			<View style={tw`h-16 p-4 w-full bg-gray-900 flex-row justify-between items-center`}>
+			<View style={tw`flex-row items-center justify-between w-full h-16 p-4 bg-gray-900`}>
 				<TouchableOpacity
 					onPress={() => navigation.replace(RootStackScreens.HomeScreen)}
 					style={tw`flex-row items-center`}
 				>
 					<Feather name='edit' size={20} color={tw.color('gray-500')} />
-					<Text style={tw`text-gray-300 text-2xl font-semibold ml-2`}>
+					<Text style={tw`ml-2 text-2xl font-semibold text-gray-300`}>
 						{channelName.toUpperCase()}
 					</Text>
 				</TouchableOpacity>
@@ -35,7 +35,7 @@ export function ChatScreen({ navigation, route }: StackScreenProps<Props, 'ChatS
 				</TouchableOpacity>
 			</View>
 			<View style={tw`flex-1`}>
-				<ChatView />
+				<ChatView channelName={channelName} />
 				<MessageInput />
 			</View>
 		</SafeAreaView>

@@ -1,28 +1,35 @@
+import tmi from 'tmi.js';
 import create from 'zustand';
-
 export interface Message {
 	id: string;
-	user: string;
+	tags: tmi.ChatUserstate;
 	text: string;
 }
 
 interface MessageState {
 	messages: Message[];
-	addMessage: (message: Omit<Message, 'id'>) => void;
+	addMessage: (message: Message) => void;
+	clearMessages: () => void;
 }
 
-let currentId = 15;
+const MAX_MESSAGE_LENGTH = 100;
 
-export const useMessages = create<MessageState>((set) => ({
-	messages: Array.from({ length: 15 }).map((_, index) => ({
-		id: index.toString(),
-		user: 'username',
-		text: 'This is a long message. This message is coming from zustand store.',
-	})),
+export const useMessageStore = create<MessageState>((setState, getState) => ({
+	messages: [],
 	addMessage: (message) => {
-		set((state) => ({
+		const currentMessages = getState().messages;
+		currentMessages.push(message);
+
+		if (currentMessages.length > MAX_MESSAGE_LENGTH) {
+			currentMessages.shift();
+		}
+
+		setState((state) => ({
 			...state,
-			messages: [...state.messages, { id: String(currentId++), ...message }],
+			messages: currentMessages,
 		}));
+	},
+	clearMessages: () => {
+		setState((state) => ({ ...state, messages: [] }));
 	},
 }));

@@ -5,14 +5,19 @@ import { Message } from '../store/useMessages';
 
 interface Props {
 	message: Message;
-	color: 'red' | 'indigo';
 }
 
-export function ChatMessage({ message, color }: Props) {
+export function ChatMessage({ message }: Props) {
 	return (
-		<Text style={tw`flex-row py-1`}>
-			<Text style={tw`text-${color}-500 text-lg`}>{message.user}: </Text>
-			<Text style={tw`text-white text-base`}>{message.text}</Text>
+		<Text style={tw`flex-row items-center py-1`}>
+			<Text
+				style={tw.style('text-lg font-semibold', {
+					color: message.tags.color ?? tw.color('gray-500')!,
+				})}
+			>
+				{message.tags['display-name']}:{' '}
+			</Text>
+			<Text style={tw`text-base text-white`}>{message.text}</Text>
 		</Text>
 	);
 }
